@@ -1,0 +1,305 @@
+version: '3.8'
+
+services:
+  # Database Services
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: naebak_main
+      POSTGRES_USER: naebak_user
+      POSTGRES_PASSWORD: naebak_secure_password_2024
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init-databases.sql:/docker-entrypoint-initdb.d/init-databases.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U naebak_user -d naebak_main"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Django Services
+  naebak-auth-service:
+    build:
+      context: ./naebak-auth-service
+      dockerfile: ../Dockerfile.django
+    ports:
+      - "8001:8000"
+    environment:
+      - DEBUG=True
+      - DB_HOST=postgres
+      - REDIS_URL=redis://redis:6379/1
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-auth-service:/app
+    command: python manage.py runserver 0.0.0.0:8000
+
+  naebak-admin-service:
+    build:
+      context: ./naebak-admin-service
+      dockerfile: ../Dockerfile.django
+    ports:
+      - "8002:8000"
+    environment:
+      - DEBUG=True
+      - DB_HOST=postgres
+      - REDIS_URL=redis://redis:6379/2
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-admin-service:/app
+    command: python manage.py runserver 0.0.0.0:8000
+
+  naebak-complaints-service:
+    build:
+      context: ./naebak-complaints-service
+      dockerfile: ../Dockerfile.django
+    ports:
+      - "8003:8000"
+    environment:
+      - DEBUG=True
+      - DB_HOST=postgres
+      - REDIS_URL=redis://redis:6379/3
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-complaints-service:/app
+    command: python manage.py runserver 0.0.0.0:8000
+
+  naebak-messaging-service:
+    build:
+      context: ./naebak-messaging-service
+      dockerfile: ../Dockerfile.django
+    ports:
+      - "8004:8000"
+    environment:
+      - DEBUG=True
+      - DB_HOST=postgres
+      - REDIS_URL=redis://redis:6379/4
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-messaging-service:/app
+    command: python manage.py runserver 0.0.0.0:8000
+
+  naebak-content-service:
+    build:
+      context: ./naebak-content-service
+      dockerfile: ../Dockerfile.django
+    ports:
+      - "8005:8000"
+    environment:
+      - DEBUG=True
+      - DB_HOST=postgres
+      - REDIS_URL=redis://redis:6379/5
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-content-service:/app
+    command: python manage.py runserver 0.0.0.0:8000
+
+  naebak-ratings-service:
+    build:
+      context: ./naebak-ratings-service
+      dockerfile: ../Dockerfile.django
+    ports:
+      - "8006:8000"
+    environment:
+      - DEBUG=True
+      - DB_HOST=postgres
+      - REDIS_URL=redis://redis:6379/6
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-ratings-service:/app
+    command: python manage.py runserver 0.0.0.0:8000
+
+  # Flask Services
+  naebak-gateway:
+    build:
+      context: ./naebak-gateway
+      dockerfile: ../Dockerfile.flask
+    ports:
+      - "8007:8000"
+    environment:
+      - DEBUG=True
+      - REDIS_HOST=redis
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-gateway:/app
+    command: python app.py
+
+  naebak-visitor-counter-service:
+    build:
+      context: ./naebak-visitor-counter-service
+      dockerfile: ../Dockerfile.flask
+    ports:
+      - "8008:8000"
+    environment:
+      - DEBUG=True
+      - REDIS_HOST=redis
+      - REDIS_DB=8
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-visitor-counter-service:/app
+    command: python app.py
+
+  naebak-statistics-service:
+    build:
+      context: ./naebak-statistics-service
+      dockerfile: ../Dockerfile.flask
+    ports:
+      - "8009:8000"
+    environment:
+      - DEBUG=True
+      - REDIS_HOST=redis
+      - REDIS_DB=9
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-statistics-service:/app
+    command: python app.py
+
+  naebak-news-service:
+    build:
+      context: ./naebak-news-service
+      dockerfile: ../Dockerfile.flask
+    ports:
+      - "8010:8000"
+    environment:
+      - DEBUG=True
+      - REDIS_HOST=redis
+      - REDIS_DB=10
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-news-service:/app
+    command: python app.py
+
+  naebak-banner-service:
+    build:
+      context: ./naebak-banner-service
+      dockerfile: ../Dockerfile.flask
+    ports:
+      - "8011:8000"
+    environment:
+      - DEBUG=True
+      - REDIS_HOST=redis
+      - REDIS_DB=11
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-banner-service:/app
+    command: python app.py
+
+  naebak-theme-service:
+    build:
+      context: ./naebak-theme-service
+      dockerfile: ../Dockerfile.flask
+    ports:
+      - "8012:8000"
+    environment:
+      - DEBUG=True
+      - REDIS_HOST=redis
+      - REDIS_DB=12
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-theme-service:/app
+    command: python app.py
+
+  naebak-notifications-service:
+    build:
+      context: ./naebak-notifications-service
+      dockerfile: ../Dockerfile.flask
+    ports:
+      - "8013:8000"
+    environment:
+      - DEBUG=True
+      - REDIS_HOST=redis
+      - REDIS_DB=13
+    depends_on:
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./naebak-notifications-service:/app
+    command: python app.py
+
+  # Frontend Services
+  naebak-frontend:
+    build:
+      context: ./naebak-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://naebak-gateway:8007/api
+    volumes:
+      - ./naebak-frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - naebak-gateway
+    command: npm run dev
+
+  naebak-admin-frontend:
+    build:
+      context: ./naebak-admin-frontend
+    ports:
+      - "3001:3001"
+    environment:
+      - NODE_ENV=development
+      - NEXT_PUBLIC_API_URL=http://naebak-gateway:8007/api
+      - NEXT_PUBLIC_ADMIN_API_URL=http://naebak-admin-service:8002/api
+    volumes:
+      - ./naebak-admin-frontend:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - naebak-admin-service
+      - naebak-gateway
+    command: npm run dev
+
+volumes:
+  postgres_data:
+  redis_data:
