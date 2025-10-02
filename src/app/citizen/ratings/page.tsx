@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Layout from '../../../components/Layout';
 import CitizenProtectedRoute from '../../../components/CitizenProtectedRoute';
 
 interface Rating {
@@ -85,8 +84,7 @@ export default function CitizenRatingsPage() {
   if (loading) {
     return (
       <CitizenProtectedRoute>
-        <Layout showBanner={false}>
-          <div className="container py-5">
+        <div className="container py-5">
             <div className="text-center">
               <div className="spinner-border text-success" role="status">
                 <span className="visually-hidden">جاري التحميل...</span>
@@ -94,15 +92,13 @@ export default function CitizenRatingsPage() {
               <p className="mt-3 text-muted">جاري تحميل التقييمات...</p>
             </div>
           </div>
-        </Layout>
       </CitizenProtectedRoute>
     );
   }
 
   return (
     <CitizenProtectedRoute>
-      <Layout showBanner={false}>
-        {/* قسم العنوان */}
+      {/* قسم العنوان */}
         <section className="py-4" style={{backgroundColor: '#f8f9fa'}}>
           <div className="container">
             <div className="row align-items-center">
@@ -316,7 +312,6 @@ export default function CitizenRatingsPage() {
             </div>
           </section>
         )}
-      </Layout>
     </CitizenProtectedRoute>
   );
 }

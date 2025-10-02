@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Layout from '../../../components/Layout';
 
 interface Achievement {
   id: number;
@@ -165,8 +164,7 @@ export default function MemberAchievements() {
 
   if (isLoading) {
     return (
-      <Layout showBanner={false}>
-        <div className="container py-5">
+      <div className="container py-5">
           <div className="text-center">
             <div className="spinner-border text-success" role="status">
               <span className="visually-hidden">جاري التحميل...</span>
@@ -174,13 +172,11 @@ export default function MemberAchievements() {
             <p className="mt-3 text-muted">جاري تحميل الإنجازات...</p>
           </div>
         </div>
-      </Layout>
     );
   }
 
   return (
-    <Layout showBanner={false}>
-      {/* قسم الترحيب */}
+    {/* قسم الترحيب */}
       <section className="py-4" style={{backgroundColor: '#f8f9fa'}}>
         <div className="container">
           <div className="row align-items-center">
@@ -475,6 +471,5 @@ export default function MemberAchievements() {
           </div>
         </section>
       )}
-    </Layout>
   );
 }

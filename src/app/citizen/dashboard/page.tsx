@@ -1,8 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Layout from '../../../components/Layout';
-import CitizenProtectedRoute from '../../../components/CitizenProtectedRoute';
+import CitizenProtectedRoute from '../../../components/CitizenProtectedRoute';;
 
 interface UserProfile {
   id: number;
@@ -67,22 +66,19 @@ export default function CitizenDashboard() {
 
   if (isLoading) {
     return (
-      <Layout showBanner={false}>
-        <div className="container py-5">
-          <div className="text-center">
-            <div className="spinner-border text-success" role="status">
-              <span className="visually-hidden">جاري التحميل...</span>
-            </div>
-            <p className="mt-3 text-muted">جاري تحميل لوحة التحكم...</p>
+      <div className="container py-5">
+        <div className="text-center">
+          <div className="spinner-border text-success" role="status">
+            <span className="visually-hidden">جاري التحميل...</span>
           </div>
+          <p className="mt-3 text-muted">جاري تحميل لوحة التحكم...</p>
         </div>
-      </Layout>
+      </div>
     );
   }
 
   return (
     <CitizenProtectedRoute>
-      <Layout showBanner={false}>
       {/* قسم الترحيب */}
       <section className="py-4" style={{backgroundColor: '#f8f9fa'}}>
         <div className="container">
@@ -349,7 +345,6 @@ export default function CitizenDashboard() {
           </div>
         </div>
       </section>
-      </Layout>
     </CitizenProtectedRoute>
   );
 }

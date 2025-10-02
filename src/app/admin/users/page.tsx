@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import Layout from '../../../components/Layout';
 
 interface User {
   id: string;
@@ -154,8 +153,7 @@ const AdminUsersPage = () => {
   }
 
   return (
-    <Layout>
-      <div className="container-fluid py-4">
+    <div className="container-fluid py-4">
       <div className="row mb-4">
         <div className="col-12">
           <h1 className="h2 mb-3" style={{ color: '#004705' }}>إدارة المستخدمين</h1>
@@ -367,7 +365,6 @@ const AdminUsersPage = () => {
         </div>
       )}
       </div>
-    </Layout>
   );
 };
 

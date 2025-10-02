@@ -1,18 +1,21 @@
 'use client';
 
 import { useState } from 'react';
-
-// --- DELETED ---
-// We have removed the imports for Header, Footer, Banner, and NewsTicker
-// because they are now handled by the main layout file (src/app/layout.tsx).
+import { useRouter } from 'next/navigation';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export default function ComplaintPage() {
-  const [complaintText, setComplaintText] = useState('');
+  const router = useRouter();
+  const supabase = createClientComponentClient();
+  
   const [title, setTitle] = useState('');
+  const [complaintText, setComplaintText] = useState('');
   const [type, setType] = useState('');
   const [governorate, setGovernorate] = useState('');
   const [files, setFiles] = useState<FileList | null>(null);
   const [agreed, setAgreed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
 
   const maxLength = 1500;
   const remainingChars = maxLength - complaintText.length;
@@ -27,29 +30,113 @@ export default function ComplaintPage() {
     'كفر الشيخ', 'الغربية', 'المنوفية', 'البحيرة', 'الإسماعيلية', 'بورسعيد',
     'السويس', 'المنيا', 'بني سويف', 'الفيوم', 'أسيوط', 'سوهاج', 'قنا',
     'الأقصر', 'أسوان', 'البحر الأحمر', 'الوادي الجديد', 'مطروح',
-    'شمال سيناء', 'جنوب سيناء'
+    'شمال سيناء', 'جنوب سيناء', 'دمياط'
   ];
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = e.target.files;
     if (selectedFiles && selectedFiles.length > 10) {
-      alert('يمكن رفع 10 ملفات كحد أقصى');
+      setError('يمكن رفع 10 ملفات كحد أقصى');
       return;
     }
+    
+    // Check file sizes
+    if (selectedFiles) {
+      for (let i = 0; i < selectedFiles.length; i++) {
+        if (selectedFiles[i].size > 5 * 1024 * 1024) { // 5MB
+          setError('حجم الملف يجب أن لا يتجاوز 5 ميجا');
+          return;
+        }
+      }
+    }
+    
     setFiles(selectedFiles);
+    setError('');
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    
     if (!title || !complaintText || !type || !governorate || !agreed) {
-      alert('يرجى ملء جميع الحقول المطلوبة والموافقة على الشروط');
+      setError('يرجى ملء جميع الحقول المطلوبة والموافقة على الشروط');
       return;
     }
-    console.log({ title, complaintText, type, governorate, files, agreed });
-    alert('تم إرسال الشكوى بنجاح');
+
+    setIsLoading(true);
+
+    try {
+      // Check if user is logged in
+      const { data: { user } } = await supabase.auth.getUser();
+      
+      if (!user) {
+        setError('يجب تسجيل الدخول أولاً لتقديم شكوى');
+        setIsLoading(false);
+        setTimeout(() => router.push('/login'), 2000);
+        return;
+      }
+
+      // Upload files to Supabase Storage if any
+      let uploadedFiles: string[] = [];
+      if (files && files.length > 0) {
+        for (let i = 0; i < files.length; i++) {
+          const file = files[i];
+          const fileExt = file.name.split('.').pop();
+          const fileName = `${user.id}/${Date.now()}_${i}.${fileExt}`;
+          
+          const { error: uploadError } = await supabase.storage
+            .from('complaints')
+            .upload(fileName, file);
+
+          if (uploadError) {
+            console.error('Error uploading file:', uploadError);
+          } else {
+            uploadedFiles.push(fileName);
+          }
+        }
+      }
+
+      // Insert complaint into database
+      const { data, error: insertError } = await supabase
+        .from('issues')
+        .insert({
+          user_id: user.id,
+          title: title,
+          description: complaintText,
+          category: type,
+          governorate: governorate,
+          status: 'pending',
+          attachments: uploadedFiles.length > 0 ? uploadedFiles : null
+        })
+        .select()
+        .single();
+
+      if (insertError) {
+        throw insertError;
+      }
+
+      // Success
+      alert('تم إرسال الشكوى بنجاح! سيتم مراجعتها وإسنادها للنائب المختص.');
+      
+      // Reset form
+      setTitle('');
+      setComplaintText('');
+      setType('');
+      setGovernorate('');
+      setFiles(null);
+      setAgreed(false);
+      
+      // Redirect to citizen dashboard
+      setTimeout(() => router.push('/citizen/dashboard'), 2000);
+      
+    } catch (err: any) {
+      console.error('Error submitting complaint:', err);
+      setError('حدث خطأ أثناء إرسال الشكوى. يرجى المحاولة مرة أخرى.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  // The return statement now only contains the unique content for this page.
   return (
     <div className="container-fluid py-5" style={{backgroundColor: '#f8f9fa'}}>
       <div className="container">
@@ -57,15 +144,26 @@ export default function ComplaintPage() {
           <div className="col-lg-8">
             <div className="card shadow-sm border-0">
               <div className="card-header text-center py-4" style={{backgroundColor: '#004705'}}>
-                <h2 className="fw-bold mb-0 text-white">إنشاء شكوى جديدة</h2>
+                <h2 className="fw-bold mb-0 text-white">
+                  <i className="fas fa-file-alt me-2"></i>
+                  إنشاء شكوى جديدة
+                </h2>
                 <p className="text-white-50 mb-0 mt-2">قدم شكواك وسنقوم بإيصالها للنائب المختص</p>
               </div>
               
               <div className="card-body p-5">
+                {error && (
+                  <div className="alert alert-danger" role="alert">
+                    <i className="fas fa-exclamation-circle me-2"></i>
+                    {error}
+                  </div>
+                )}
+
                 <form onSubmit={handleSubmit}>
                   {/* عنوان الشكوى */}
                   <div className="mb-4">
                     <label className="form-label fw-bold" style={{color: '#004705'}}>
+                      <i className="fas fa-heading me-2"></i>
                       عنوان الشكوى <span className="text-danger">*</span>
                     </label>
                     <input
@@ -75,13 +173,14 @@ export default function ComplaintPage() {
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       required
-                      style={{fontSize: '0.9rem'}}
+                      disabled={isLoading}
                     />
                   </div>
 
                   {/* نوع الشكوى */}
                   <div className="mb-4">
                     <label className="form-label fw-bold" style={{color: '#004705'}}>
+                      <i className="fas fa-tags me-2"></i>
                       نوع الشكوى <span className="text-danger">*</span>
                     </label>
                     <select
@@ -89,7 +188,7 @@ export default function ComplaintPage() {
                       value={type}
                       onChange={(e) => setType(e.target.value)}
                       required
-                      style={{fontSize: '0.9rem'}}
+                      disabled={isLoading}
                     >
                       <option value="">اختر نوع الشكوى</option>
                       {complaintTypes.map((complaintType) => (
@@ -103,6 +202,7 @@ export default function ComplaintPage() {
                   {/* المحافظة */}
                   <div className="mb-4">
                     <label className="form-label fw-bold" style={{color: '#004705'}}>
+                      <i className="fas fa-map-marker-alt me-2"></i>
                       المحافظة <span className="text-danger">*</span>
                     </label>
                     <select
@@ -110,7 +210,7 @@ export default function ComplaintPage() {
                       value={governorate}
                       onChange={(e) => setGovernorate(e.target.value)}
                       required
-                      style={{fontSize: '0.9rem'}}
+                      disabled={isLoading}
                     >
                       <option value="">اختر المحافظة</option>
                       {governorates.map((gov) => (
@@ -124,6 +224,7 @@ export default function ComplaintPage() {
                   {/* نص الشكوى */}
                   <div className="mb-4">
                     <label className="form-label fw-bold" style={{color: '#004705'}}>
+                      <i className="fas fa-align-left me-2"></i>
                       تفاصيل الشكوى <span className="text-danger">*</span>
                     </label>
                     <textarea
@@ -134,10 +235,11 @@ export default function ComplaintPage() {
                       onChange={(e) => setComplaintText(e.target.value)}
                       maxLength={maxLength}
                       required
-                      style={{fontSize: '0.9rem', resize: 'vertical'}}
+                      disabled={isLoading}
+                      style={{resize: 'vertical'}}
                     />
                     <div className="text-end mt-2">
-                      <small className="text-muted" style={{fontSize: '0.8rem'}}>
+                      <small className={remainingChars < 100 ? 'text-danger' : 'text-muted'}>
                         {remainingChars} حرف متبقي من {maxLength}
                       </small>
                     </div>
@@ -146,6 +248,7 @@ export default function ComplaintPage() {
                   {/* رفع المستندات */}
                   <div className="mb-4">
                     <label className="form-label fw-bold" style={{color: '#004705'}}>
+                      <i className="fas fa-paperclip me-2"></i>
                       المستندات المرفقة (اختياري)
                     </label>
                     <input
@@ -154,7 +257,7 @@ export default function ComplaintPage() {
                       multiple
                       accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.gif"
                       onChange={handleFileChange}
-                      style={{fontSize: '0.9rem'}}
+                      disabled={isLoading}
                     />
                     <small className="text-muted mt-2 d-block">
                       يمكن رفع حتى 10 ملفات (PDF, Word, صور) - الحد الأقصى 5 ميجا لكل ملف
@@ -162,6 +265,7 @@ export default function ComplaintPage() {
                     {files && files.length > 0 && (
                       <div className="mt-2">
                         <small className="text-success">
+                          <i className="fas fa-check-circle me-1"></i>
                           تم اختيار {files.length} ملف
                         </small>
                       </div>
@@ -178,8 +282,9 @@ export default function ComplaintPage() {
                         checked={agreed}
                         onChange={(e) => setAgreed(e.target.checked)}
                         required
+                        disabled={isLoading}
                       />
-                      <label className="form-check-label" htmlFor="agreementCheck" style={{fontSize: '0.9rem'}}>
+                      <label className="form-check-label" htmlFor="agreementCheck">
                         <span className="text-danger">*</span> أفوض إدارة موقع نائبك بإسناد الشكوى إلى من تراه مناسباً من السادة النواب أو المرشحين في أحد المجلسين (النواب أو الشيوخ) كما أنني أوافق على إرسال المستندات إلى من يهمه الأمر
                       </label>
                     </div>
@@ -190,17 +295,29 @@ export default function ComplaintPage() {
                     <button
                       type="button"
                       className="btn btn-outline-secondary btn-lg me-md-2"
-                      onClick={() => window.history.back()}
+                      onClick={() => router.back()}
+                      disabled={isLoading}
                     >
+                      <i className="fas fa-times me-2"></i>
                       إلغاء
                     </button>
                     <button
                       type="submit"
                       className="btn btn-lg text-white"
                       style={{backgroundColor: '#004705'}}
-                      disabled={!agreed}
+                      disabled={!agreed || isLoading}
                     >
-                      إرسال الشكوى
+                      {isLoading ? (
+                        <>
+                          <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                          جاري الإرسال...
+                        </>
+                      ) : (
+                        <>
+                          <i className="fas fa-paper-plane me-2"></i>
+                          إرسال الشكوى
+                        </>
+                      )}
                     </button>
                   </div>
                 </form>

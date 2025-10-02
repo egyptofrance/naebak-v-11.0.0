@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Layout from '../../../components/Layout';
 import CitizenProtectedRoute from '../../../components/CitizenProtectedRoute';
 
 interface CitizenProfile {
@@ -158,8 +157,7 @@ export default function CitizenProfile() {
 
   if (isLoading) {
     return (
-      <Layout showBanner={false}>
-        <div className="container py-5">
+      <div className="container py-5">
           <div className="text-center">
             <div className="spinner-border text-success" role="status">
               <span className="visually-hidden">جاري التحميل...</span>
@@ -167,13 +165,11 @@ export default function CitizenProfile() {
             <p className="mt-3 text-muted">جاري تحميل البيانات...</p>
           </div>
         </div>
-      </Layout>
     );
   }
 
   return (
     <CitizenProtectedRoute>
-      <Layout showBanner={false}>
       {/* قسم الترحيب */}
       <section className="py-4" style={{backgroundColor: '#f8f9fa'}}>
         <div className="container">
@@ -466,7 +462,6 @@ export default function CitizenProfile() {
           </form>
         </div>
       </section>
-      </Layout>
     </CitizenProtectedRoute>
   );
 }

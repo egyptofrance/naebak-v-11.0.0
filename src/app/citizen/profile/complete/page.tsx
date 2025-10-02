@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Layout from '../../../../components/Layout';
 import CitizenProtectedRoute from '../../../../components/CitizenProtectedRoute';
 
 interface CitizenProfileData {
@@ -160,8 +159,7 @@ export default function CompleteProfile() {
 
   return (
     <CitizenProtectedRoute>
-      <Layout showBanner={false}>
-        <div className="container py-5">
+      <div className="container py-5">
           <div className="row justify-content-center">
             <div className="col-lg-8">
               <div className="card border-0 shadow-lg" style={{borderRadius: '15px'}}>
@@ -360,7 +358,6 @@ export default function CompleteProfile() {
             </div>
           </div>
         </div>
-      </Layout>
     </CitizenProtectedRoute>
   );
 }

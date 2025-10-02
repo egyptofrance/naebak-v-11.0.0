@@ -1,5 +1,4 @@
 import React from 'react';
-import Layout from '@/components/Layout';
 
 // Generate static params for static export
 export async function generateStaticParams() {
@@ -24,7 +23,7 @@ const CitizenProfilePage: React.FC<CitizenProfileProps> = async ({ params }) => 
   };
 
   return (
-    <Layout showBanner={false}> {/* Public profile might not need a banner */}
+    {/* Public profile might not need a banner */}
       <div className="container mx-auto p-4">
         <h1 className="text-3xl font-bold mb-6 text-center">ملف المواطن العام</h1>
         <div className="bg-white shadow-md rounded-lg p-6">
@@ -43,7 +42,6 @@ const CitizenProfilePage: React.FC<CitizenProfileProps> = async ({ params }) => 
           {/* Add more public profile details here */}
         </div>
       </div>
-    </Layout>
   );
 };
 

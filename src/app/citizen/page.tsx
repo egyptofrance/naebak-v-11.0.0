@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useSession, signIn } from 'next-auth/react';
-import Layout from '../../components/Layout';
 import '../../styles/forms.css';
 
 interface Governorate {
@@ -210,21 +209,18 @@ export default function CitizenPage() {
 
   if (status === 'loading') {
     return (
-      <Layout showBanner={false}>
-        <div className="container py-5">
+      <div className="container py-5">
           <div className="text-center">
             <div className="spinner-border text-success" role="status">
               <span className="visually-hidden">جاري التحميل...</span>
             </div>
           </div>
         </div>
-      </Layout>
     );
   }
 
   return (
-    <Layout showBanner={false}>
-      {/* قسم الترحيب */}
+    {/* قسم الترحيب */}
       <section className="py-4" style={{backgroundColor: '#f8f9fa'}}>
         <div className="container">
           <div className="row align-items-center justify-content-center">
@@ -529,6 +525,5 @@ export default function CitizenPage() {
           </div>
         </div>
       </section>
-    </Layout>
   );
 }

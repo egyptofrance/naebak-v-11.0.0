@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Layout from '../../../components/Layout';
 import CandidateProtectedRoute from '../../../components/CandidateProtectedRoute';
 
 interface Message {
@@ -136,8 +135,7 @@ export default function CandidateMessagesPage() {
   if (loading) {
     return (
       <CandidateProtectedRoute>
-        <Layout>
-          <div className="container py-5">
+        <div className="container py-5">
             <div className="text-center">
               <div className="spinner-border text-success" role="status">
                 <span className="visually-hidden">جاري التحميل...</span>
@@ -145,15 +143,13 @@ export default function CandidateMessagesPage() {
               <p className="mt-3 text-muted">جاري تحميل الرسائل...</p>
             </div>
           </div>
-        </Layout>
       </CandidateProtectedRoute>
     );
   }
 
   return (
     <CandidateProtectedRoute>
-      <Layout>
-        {/* قسم العنوان */}
+      {/* قسم العنوان */}
         <section className="py-4" style={{backgroundColor: '#f8f9fa'}}>
           <div className="container">
             <div className="row align-items-center">
@@ -468,7 +464,6 @@ export default function CandidateMessagesPage() {
             </div>
           </section>
         )}
-      </Layout>
     </CandidateProtectedRoute>
   );
 }

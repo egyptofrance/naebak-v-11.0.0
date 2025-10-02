@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { Tajawal } from "next/font/google";
 import "./globals.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Header from "@/components/Header"; 
 import Banner from "@/components/Banner";
 import NewsTicker from "@/components/NewsTicker";
 import Footer from "@/components/Footer";
+import BootstrapClient from "@/components/BootstrapClient";
+
 const tajawal = Tajawal({ subsets: ["arabic"], weight: ["400", "500", "700"] });
 
 export const metadata: Metadata = {
@@ -41,12 +44,23 @@ export default function RootLayout({
 
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
-      <body className={`${tajawal.className} flex flex-col min-h-screen`}>
+      <head>
+        {/* Font Awesome */}
+        <link 
+          rel="stylesheet" 
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+          integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" 
+          crossOrigin="anonymous" 
+          referrerPolicy="no-referrer" 
+        />
+      </head>
+      <body className={tajawal.className} style={{display: 'flex', flexDirection: 'column', minHeight: '100vh'}}>
         <Header />
         <Banner />
         <NewsTicker text={newsText} />
-        <main className="flex-grow">{children}</main>
+        <main style={{flex: '1 0 auto'}}>{children}</main>
         <Footer />
+        <BootstrapClient />
       </body>
     </html>
   );

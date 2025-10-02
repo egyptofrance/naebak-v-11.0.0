@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import Layout from '../../../components/Layout';
 
 interface ManagerStats {
   totalComplaints: number;
@@ -74,8 +73,7 @@ const ManagerDashboardPage = () => {
   }
 
   return (
-    <Layout>
-      <div className="container-fluid py-4">
+    <div className="container-fluid py-4">
       <div className="row mb-4">
         <div className="col-12">
           <h1 className="h2 mb-3" style={{ color: '#004705' }}>لوحة تحكم المدير</h1>
@@ -285,7 +283,6 @@ const ManagerDashboardPage = () => {
         }
       `}</style>
       </div>
-    </Layout>
   );
 };
 

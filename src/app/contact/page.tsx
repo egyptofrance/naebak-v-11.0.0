@@ -1,12 +1,9 @@
 'use client';
 
-import Layout from '../../components/Layout';
 
 export default function ContactPage() {
   return (
-    <Layout showBanner={true}>
-
-      {/* قسم الترحيب */}
+    {/* قسم الترحيب */}
       <section className="py-4" style={{backgroundColor: '#f8f9fa'}}>
         <div className="container">
           <div className="row align-items-center justify-content-center">
@@ -111,7 +108,5 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-
-    </Layout>
   );
 }

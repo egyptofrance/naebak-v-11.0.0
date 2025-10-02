@@ -66,9 +66,9 @@ export default function LoginPage() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    disabled={loading} // Disable input when loading
+                    disabled={loading}
                   />
-                  <label htmlFor="email">البريد الإلكتروني</label>
+                  <label htmlFor="email"><i className="fas fa-envelope me-2"></i>البريد الإلكتروني</label>
                 </div>
 
                 <div className="form-floating mb-4">
@@ -80,9 +80,9 @@ export default function LoginPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    disabled={loading} // Disable input when loading
+                    disabled={loading}
                   />
-                  <label htmlFor="password">كلمة المرور</label>
+                  <label htmlFor="password"><i className="fas fa-lock me-2"></i>كلمة المرور</label>
                 </div>
 
                 <div className="d-grid">
@@ -90,9 +90,19 @@ export default function LoginPage() {
                     type="submit" 
                     className="btn btn-lg text-white fw-bold"
                     style={{backgroundColor: '#004705'}}
-                    disabled={loading} // Disable button when loading
+                    disabled={loading}
                   >
-                    {loading ? 'جاري تسجيل الدخول...' : 'تسجيل الدخول'}
+                    {loading ? (
+                      <>
+                        <span className="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                        جاري تسجيل الدخول...
+                      </>
+                    ) : (
+                      <>
+                        <i className="fas fa-sign-in-alt me-2"></i>
+                        تسجيل الدخول
+                      </>
+                    )}
                   </button>
                 </div>
               </form>

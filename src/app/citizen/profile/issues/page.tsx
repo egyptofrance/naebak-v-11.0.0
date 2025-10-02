@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Layout from '../../../../components/Layout';
 
 interface Issue {
   id: number;
@@ -265,8 +264,7 @@ export default function IssuesPage() {
 
   if (isLoading) {
     return (
-      <Layout showBanner={false}>
-        <div className="container py-5">
+      <div className="container py-5">
           <div className="text-center">
             <div className="spinner-border text-success" role="status">
               <span className="visually-hidden">جاري التحميل...</span>
@@ -274,13 +272,11 @@ export default function IssuesPage() {
             <p className="mt-3 text-muted">جاري تحميل القضايا...</p>
           </div>
         </div>
-      </Layout>
     );
   }
 
   return (
-    <Layout showBanner={false}>
-      {/* قسم الترحيب */}
+    {/* قسم الترحيب */}
       <section className="py-4" style={{backgroundColor: '#f8f9fa'}}>
         <div className="container">
           <div className="row align-items-center">
@@ -774,6 +770,5 @@ export default function IssuesPage() {
           </div>
         </div>
       )}
-    </Layout>
   );
 }

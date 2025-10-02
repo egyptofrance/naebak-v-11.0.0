@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Layout from '../../../components/Layout';
 
 interface MemberProfile {
   full_name: string;
@@ -51,8 +50,7 @@ export default function MemberDashboard() {
 
   if (isLoading) {
     return (
-      <Layout showBanner={false}>
-        <div className="container py-5">
+      <div className="container py-5">
           <div className="text-center">
             <div className="spinner-border text-success" role="status">
               <span className="visually-hidden">جاري التحميل...</span>
@@ -60,14 +58,12 @@ export default function MemberDashboard() {
             <p className="mt-3 text-muted">جاري تحميل البيانات...</p>
           </div>
         </div>
-      </Layout>
     );
   }
 
   if (!profile) {
     return (
-      <Layout showBanner={false}>
-        <div className="container py-5">
+      <div className="container py-5">
           <div className="text-center">
             <h3 className="text-danger">خطأ في تحميل البيانات</h3>
             <p className="text-muted">يرجى تسجيل الدخول مرة أخرى</p>
@@ -79,13 +75,11 @@ export default function MemberDashboard() {
             </button>
           </div>
         </div>
-      </Layout>
     );
   }
 
   return (
-    <Layout showBanner={false}>
-      {/* قسم الترحيب */}
+    {/* قسم الترحيب */}
       <section className="py-4" style={{backgroundColor: '#f8f9fa'}}>
         <div className="container">
           <div className="row align-items-center">
@@ -370,6 +364,5 @@ export default function MemberDashboard() {
           </div>
         </section>
       )}
-    </Layout>
   );
 }

@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import Layout from '../../../components/Layout';
 import governoratesData from '../../../data/governorates.json';
 
 export default function MemberRegister() {
@@ -82,8 +81,7 @@ export default function MemberRegister() {
   };
 
   return (
-    <Layout>
-      <div style={{ padding: '40px 20px', maxWidth: '600px', margin: '0 auto' }}>
+    <div style={{ padding: '40px 20px', maxWidth: '600px', margin: '0 auto' }}>
         <form onSubmit={handleSubmit} noValidate style={{ backgroundColor: '#fff', padding: '30px', border: '1px solid #ddd', borderRadius: '8px' }}>
           
           {message && (
@@ -323,6 +321,5 @@ export default function MemberRegister() {
           </div>
         </form>
       </div>
-    </Layout>
   );
 }

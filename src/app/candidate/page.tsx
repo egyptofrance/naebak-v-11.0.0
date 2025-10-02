@@ -1,11 +1,9 @@
-'use client';
+'use client'
 
 import { useState } from 'react'
-import Header from '../../components/Header'
-import Footer from '../../components/Footer'
 import MessageModal from '../../components/MessageModal'
 
-export default function CandidatePage() {
+export default function CandidatePage() {{
   const [activeTab, setActiveTab] = useState('personal')
   const [achievementsPage, setAchievementsPage] = useState(1)
   const [eventsPage, setEventsPage] = useState(1)
@@ -135,8 +133,6 @@ export default function CandidatePage() {
 
   return (
     <div>
-      <Header />
-      
       {/* البانر والصورة الشخصية */}
       <div className="position-relative">
         {/* البانر */}
@@ -627,8 +623,6 @@ export default function CandidatePage() {
         )}
       </div>
 
-      <Footer />
-      
       {/* نافذة إرسال الرسالة */}
       <MessageModal
         isOpen={isMessageModalOpen}
