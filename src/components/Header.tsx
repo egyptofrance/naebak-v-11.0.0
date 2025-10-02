@@ -114,6 +114,16 @@ export default function Header() {
               {user ? (
                 // USER IS LOGGED IN
                 <>
+                  <div className="d-none d-md-block text-muted small">{visitorCount.toLocaleString()} زائر</div>
+                  <div className="position-relative">
+                    <button className="btn btn-sm btn-link text-success p-0" style={{ fontSize: '1.2rem' }}>
+                      <i className="fas fa-bell"></i>
+                    </button>
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style={{ fontSize: '0.6rem' }}>3</span>
+                  </div>
+                  <Link href="/complaint" className="btn btn-sm fw-bold text-decoration-none d-none d-md-inline-block" style={{ backgroundColor: '#E67514', color: 'black', border: 'none', borderRadius: '6px', fontSize: '0.85rem' }}>
+                    تسجيل شكوى
+                  </Link>
                   <div className="d-none d-md-flex flex-column align-items-end">
                     <div className="text-success small fw-bold mb-0">
                       {user.full_name?.split(' ')[0] || 'المستخدم'}

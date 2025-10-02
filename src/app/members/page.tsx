@@ -39,12 +39,16 @@ async function getParties() {
   return uniqueParties.sort();
 }
 
-// Get members data with filters
-async function getMembers(filters: any = {}) {
+// Get members data with filters and pagination
+async function getMembers(filters: any = {}, page: number = 1) {
   const supabase = createClient();
+  const itemsPerPage = 12;
+  const from = (page - 1) * itemsPerPage;
+  const to = from + itemsPerPage - 1;
+
   let query = supabase
     .from('members')
-    .select('id, full_name, council, governorate, electoral_district, party, gender, profile_image, rating, points')
+    .select('id, full_name, council, governorate, electoral_district, party, gender, profile_image, rating, points', { count: 'exact' })
     .order('created_at', { ascending: false });
 
   // Apply filters
@@ -64,14 +68,17 @@ async function getMembers(filters: any = {}) {
     query = query.eq('gender', filters.gender);
   }
 
-  const { data, error } = await query;
+  // Apply pagination
+  query = query.range(from, to);
+
+  const { data, error, count } = await query;
   
   if (error) {
     console.error('Error fetching members:', error);
-    return [];
+    return { members: [], totalCount: 0 };
   }
 
-  return data || [];
+  return { members: data || [], totalCount: count || 0 };
 }
 
 export default async function MembersPage({ searchParams }: { searchParams: any }) {
@@ -79,8 +86,14 @@ export default async function MembersPage({ searchParams }: { searchParams: any 
   const governorates = await getGovernorates();
   const parties = await getParties();
   
-  // Get filtered members
-  const members = await getMembers(searchParams);
+  // Get current page
+  const currentPage = parseInt(searchParams.page || '1');
+  
+  // Get filtered members with pagination
+  const { members, totalCount } = await getMembers(searchParams, currentPage);
+  
+  // Calculate total pages
+  const totalPages = Math.ceil(totalCount / 12);
 
   const renderStars = (rating: number) => {
     const stars = [];
@@ -188,7 +201,7 @@ export default async function MembersPage({ searchParams }: { searchParams: any 
 
       {/* Results Count */}
       <p className="mb-6 text-gray-600">
-        عدد النتائج: {members.length} عضو
+        عدد النتائج: {totalCount} عضو (الصفحة {currentPage} من {totalPages})
       </p>
 
       {/* Members Grid */}
@@ -263,6 +276,61 @@ export default async function MembersPage({ searchParams }: { searchParams: any 
       ) : (
         <div className="text-center py-12">
           <p className="text-gray-500 text-lg">لا توجد نتائج تطابق معايير البحث</p>
+        </div>
+      )}
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div className="mt-8 flex justify-center gap-2">
+          {/* Previous Button */}
+          {currentPage > 1 && (
+            <a
+              href={`/members?${new URLSearchParams({ ...searchParams, page: (currentPage - 1).toString() }).toString()}`}
+              className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded transition-colors"
+            >
+              السابق
+            </a>
+          )}
+
+          {/* Page Numbers */}
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => {
+            // Show first page, last page, current page, and pages around current
+            if (
+              pageNum === 1 ||
+              pageNum === totalPages ||
+              (pageNum >= currentPage - 2 && pageNum <= currentPage + 2)
+            ) {
+              return (
+                <a
+                  key={pageNum}
+                  href={`/members?${new URLSearchParams({ ...searchParams, page: pageNum.toString() }).toString()}`}
+                  className={`px-4 py-2 rounded transition-colors ${
+                    pageNum === currentPage
+                      ? 'bg-green-600 text-white'
+                      : 'bg-gray-200 hover:bg-gray-300'
+                  }`}
+                >
+                  {pageNum}
+                </a>
+              );
+            } else if (
+              pageNum === currentPage - 3 ||
+              pageNum === currentPage + 3
+            ) {
+              return <span key={pageNum} className="px-2">...</span>;
+            }
+            return null;
+          })}
+
+          {/* Next Button */}
+          {currentPage < totalPages && (
+            <a
+              href={`/members?${new URLSearchParams({ ...searchParams, page: (currentPage + 1).toString() }).toString()}`}
+              className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded transition-colors"
+            >
+              التالي
+            </a>
+          )}
         </div>
       )}
     </div>
