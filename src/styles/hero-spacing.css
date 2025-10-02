@@ -1,0 +1,60 @@
+/* Hero Section Spacing Fix */
+
+.hero-section {
+  padding-top: 2rem !important;
+  margin-top: 1rem !important;
+}
+
+.hero-content {
+  padding-top: 1.5rem !important;
+}
+
+.hero-title-enhanced {
+  margin-top: 2rem !important;
+  padding-top: 1.5rem !important;
+}
+
+/* Add breathing room between news ticker and hero content */
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: transparent;
+  z-index: 1;
+}
+
+/* Ensure proper spacing on mobile */
+@media (max-width: 768px) {
+  .hero-section {
+    padding-top: 1.5rem !important;
+    margin-top: 0.8rem !important;
+  }
+  
+  .hero-content {
+    padding-top: 1rem !important;
+  }
+  
+  .hero-title-enhanced {
+    margin-top: 1.5rem !important;
+    padding-top: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding-top: 1rem !important;
+    margin-top: 0.5rem !important;
+  }
+  
+  .hero-content {
+    padding-top: 0.8rem !important;
+  }
+  
+  .hero-title-enhanced {
+    margin-top: 1rem !important;
+    padding-top: 0.8rem !important;
+  }
+}

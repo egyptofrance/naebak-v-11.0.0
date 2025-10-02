@@ -1,0 +1,247 @@
+/* Registration Forms Styling */
+.hero-section {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  padding: 2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.auth-container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 2rem auto;
+}
+
+.enhanced-form {
+  width: 100%;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  padding: 0;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.input-container:focus-within {
+  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+  transform: translateY(-2px);
+}
+
+.input-icon {
+  padding: 1rem;
+  font-size: 1.2rem;
+  color: #6c757d;
+  background: #f8f9fa;
+  border-radius: 10px 0 0 10px;
+  border-right: 1px solid #e1e5e9;
+  min-width: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input-container input,
+.input-container select {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  color: #333;
+  outline: none;
+  border-radius: 0 10px 10px 0;
+}
+
+.input-container input::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+.input-container select {
+  cursor: pointer;
+}
+
+.input-container select option {
+  padding: 0.5rem;
+  background: #ffffff;
+  color: #333;
+}
+
+.submit-btn {
+  width: 100%;
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.message {
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.message.success {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid #e1e5e9;
+}
+
+.form-footer p {
+  color: #6c757d;
+  margin: 0;
+}
+
+.link-btn {
+  background: none;
+  border: none;
+  color: #28a745;
+  text-decoration: underline;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 0.5rem;
+}
+
+.link-btn:hover {
+  color: #20c997;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .auth-container {
+    padding: 2rem 1.5rem;
+    margin: 1rem;
+    border-radius: 15px;
+  }
+  
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .input-container {
+    border-radius: 10px;
+  }
+  
+  .input-icon {
+    border-radius: 8px 0 0 8px;
+    min-width: 45px;
+    padding: 0.8rem;
+  }
+  
+  .input-container input,
+  .input-container select {
+    padding: 0.8rem 1rem;
+    border-radius: 0 8px 8px 0;
+  }
+  
+  .submit-btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+    padding: 1rem 0;
+  }
+  
+  .auth-container {
+    padding: 1.5rem 1rem;
+  }
+  
+  .input-container {
+    flex-direction: column;
+    border-radius: 10px;
+  }
+  
+  .input-icon {
+    border-radius: 8px 8px 0 0;
+    border-right: none;
+    border-bottom: 1px solid #e1e5e9;
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .input-container input,
+  .input-container select {
+    border-radius: 0 0 8px 8px;
+  }
+}
