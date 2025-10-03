@@ -11,7 +11,7 @@ export default function MemberRegister() {
     email: '',
     password: '',
     confirmPassword: '',
-    phone: '',
+    phoneNumber: '',
     whatsapp: '',
     position: '',
     governorate: '',
@@ -172,9 +172,9 @@ export default function MemberRegister() {
           <div style={{ marginBottom: '20px' }}>
             <input
               type="tel"
-              name="phone"
+              name="phoneNumber"
               placeholder="رقم الهاتف"
-              value={formData.phone}
+              value={formData.phoneNumber}
               onChange={handleChange}
               required
               style={{ 

@@ -8,7 +8,7 @@ interface CitizenProfile {
   id: number;
   fullName: string;
   email: string;
-  phone_number: string;
+  phoneNumber: string;
   whatsapp_number?: string;
   national_id?: string;
   birth_date?: string;
@@ -32,7 +32,7 @@ export default function CitizenProfile() {
     id: 0,
         fullName: '',
     email: '',
-    phone_number: '',
+    phoneNumber: '',
     whatsapp_number: '',
     national_id: '',
     birth_date: '',
@@ -67,7 +67,7 @@ export default function CitizenProfile() {
           id: user.id || 1,
           fullName: user.fullName || "مستخدم تجريبي",
           email: user.email || "demo@example.com",
-          phone_number: citizenData.phone_number || user.phone_number || "",
+          phoneNumber: citizenData.phoneNumber || user.phoneNumber || "",
           whatsapp_number: citizenData.whatsapp_number || "",
           national_id: user.national_id || "",
           birth_date: user.birth_date || "",
@@ -301,8 +301,8 @@ export default function CitizenProfile() {
                             type="tel" 
                             className="form-control form-control-lg" 
                             placeholder="01012345678"
-                            value={profile.phone_number}
-                            onChange={(e) => handleInputChange('phone_number', e.target.value)}
+                            value={profile.phoneNumber}
+                            onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
                             required
                           />
                         </div>

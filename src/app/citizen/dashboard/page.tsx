@@ -7,7 +7,7 @@ interface UserProfile {
   id: number;
     fullName: string;
   email: string;
-  phone_number: string;
+  phoneNumber: string;
   user_type: string;
   governorate_name?: string;
   created_at: string;
@@ -39,7 +39,7 @@ export default function CitizenDashboard() {
           id: 1,
                     fullName: "أحمد محمد علي",
           email: "ahmed@example.com",
-          phone_number: "01012345678",
+          phoneNumber: "01012345678",
           user_type: "citizen",
           governorate_name: "القاهرة",
           created_at: "2024-01-15"
@@ -258,7 +258,7 @@ export default function CitizenDashboard() {
                   </div>
                   <div className="mb-3">
                     <small className="text-muted">رقم الهاتف</small>
-                    <p className="mb-1 fw-medium">{userProfile?.phone_number}</p>
+                    <p className="mb-1 fw-medium">{userProfile?.phoneNumber}</p>
                   </div>
                   <div className="mb-3">
                     <small className="text-muted">المحافظة</small>

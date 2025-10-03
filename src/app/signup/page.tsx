@@ -12,7 +12,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [phone, setPhone] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
   const [whatsapp, setWhatsapp] = useState('');
   const [gender, setGender] = useState('');
   const [birthDate, setBirthDate] = useState('');
@@ -96,8 +96,8 @@ export default function SignupPage() {
       first_name: firstName,
       last_name: lastName,
       user_type: userType,
-      phone: phone,
-      whatsapp: whatsapp || phone,
+      phoneNumber: phoneNumber,
+      whatsapp: whatsapp || phoneNumber,
       birth_date: birthDate,
       gender: gender,
       governorate: governorate,
@@ -289,16 +289,16 @@ export default function SignupPage() {
                     <div className="col-md-6">
                       <div className="form-floating mb-3">
                         <input 
-                          id="phone" 
+                          id="phoneNumber" 
                           type="tel" 
                           className="form-control" 
                           placeholder="رقم الهاتف" 
-                          value={phone} 
-                          onChange={(e) => setPhone(e.target.value)} 
+                          value={phoneNumber} 
+                          onChange={(e) => setPhoneNumber(e.target.value)} 
                           required 
                           disabled={loading} 
                         />
-                        <label htmlFor="phone"><i className="fas fa-phone me-2"></i>رقم الهاتف *</label>
+                        <label htmlFor="phoneNumber"><i className="fas fa-phone me-2"></i>رقم الهاتف *</label>
                       </div>
                     </div>
                   </div>

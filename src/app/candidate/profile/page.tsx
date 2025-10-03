@@ -10,9 +10,8 @@ interface CandidateProfile {
   position: 'Parliament Candidate' | 'Senate Candidate';
   governorate: string;
   electoral_district: string;
-  whatsapp_number: string;
-  phone_number: string;
-  electoral_symbol: string;
+   whatsapp_number: string;
+  phoneNumber: string;
   electoral_number: string;
   profile_picture?: string;
   profile_completed: boolean;
@@ -34,7 +33,7 @@ export default function CandidateProfile() {
     governorate: '',
     electoral_district: '',
     whatsapp_number: '',
-    phone_number: '',
+    phoneNumber: '',
     electoral_symbol: '',
     electoral_number: '',
     profile_completed: false
@@ -103,7 +102,7 @@ export default function CandidateProfile() {
           governorate: candidateData.governorate || "",
           electoral_district: candidateData.electoral_district || "",
           whatsapp_number: candidateData.whatsapp_number || "",
-          phone_number: candidateData.phone_number || user.phone_number || "",
+          phoneNumber: candidateData.phoneNumber || user.phoneNumber || "",
           electoral_symbol: candidateData.electoral_symbol || "",
           electoral_number: candidateData.electoral_number || "",
           profile_completed: candidateData.profile_completed || false
@@ -135,7 +134,7 @@ export default function CandidateProfile() {
     try {
       // التحقق من صحة البيانات
             if (!profile.fullName || !profile.governorate || !profile.electoral_district || 
-          !profile.phone_number || !profile.electoral_symbol || !profile.electoral_number) {
+          !profile.phoneNumber || !profile.electoral_symbol || !profile.electoral_number) {
         setMessage({type: 'error', text: 'يرجى ملء جميع الحقول المطلوبة'});
         setIsSaving(false);
         return;
@@ -143,7 +142,7 @@ export default function CandidateProfile() {
 
       // التحقق من صحة رقم الهاتف المصري
       const phoneRegex = /^(010|011|012|015)\d{8}$/;
-      if (!phoneRegex.test(profile.phone_number)) {
+      if (!phoneRegex.test(profile.phoneNumber)) {
         setMessage({type: 'error', text: 'يرجى إدخال رقم هاتف مصري صحيح'});
         setIsSaving(false);
         return;
@@ -384,16 +383,16 @@ export default function CandidateProfile() {
 
                       {/* رقم الهاتف */}
                       <div className="col-md-6">
-                        <label htmlFor="phone_number" className="form-label fw-bold">
+                        <label htmlFor="phoneNumber" className="form-label fw-bold">
                           <i className="fas fa-phone me-2 text-primary"></i>
                           رقم الهاتف *
                         </label>
                         <input
                           type="tel"
                           className="form-control form-control-lg"
-                          id="phone_number"
-                          name="phone_number"
-                          value={profile.phone_number}
+                          id="phoneNumber"
+                          name="phoneNumber"
+                          value={profile.phoneNumber}
                           onChange={handleInputChange}
                           placeholder="01012345678"
                           required
