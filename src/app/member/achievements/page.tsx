@@ -8,7 +8,7 @@ interface Achievement {
   title: string;
   description: string;
   date: string;
-  category: string;
+  itemCategory: string;
   image?: string;
 }
 
@@ -24,7 +24,7 @@ export default function MemberAchievements() {
     title: '',
     description: '',
     date: '',
-    category: ''
+    itemCategory: ''
   });
 
   const categories = [
@@ -57,14 +57,14 @@ export default function MemberAchievements() {
             title: 'مشروع قانون تطوير التعليم',
             description: 'تقديم مشروع قانون شامل لتطوير منظومة التعليم في المحافظة',
             date: '2024-01-15',
-            category: 'تشريعات وقوانين'
+            itemCategory: 'تشريعات وقوانين'
           },
           {
             id: 2,
             title: 'إنشاء مستشفى جديد',
             description: 'الإشراف على إنشاء مستشفى عام جديد بسعة 200 سرير',
             date: '2023-12-10',
-            category: 'صحة وبيئة'
+            itemCategory: 'صحة وبيئة'
           }
         ];
         setAchievements(mockAchievements);
@@ -88,7 +88,7 @@ export default function MemberAchievements() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.title || !formData.description || !formData.date || !formData.category) {
+    if (!formData.title || !formData.description || !formData.date || !formData.itemCategory) {
       setMessage({type: 'error', text: 'يرجى ملء جميع الحقول المطلوبة'});
       return;
     }
@@ -122,7 +122,7 @@ export default function MemberAchievements() {
         title: '',
         description: '',
         date: '',
-        category: ''
+        itemCategory: ''
       });
       setShowAddForm(false);
     } catch (error) {
@@ -136,7 +136,7 @@ export default function MemberAchievements() {
       title: achievement.title,
       description: achievement.description,
       date: achievement.date,
-      category: achievement.category
+      itemCategory: achievement.itemCategory
     });
     setEditingAchievement(achievement);
     setShowAddForm(true);
@@ -156,7 +156,7 @@ export default function MemberAchievements() {
       title: '',
       description: '',
       date: '',
-      category: ''
+      itemCategory: ''
     });
     setEditingAchievement(null);
     setShowAddForm(false);
@@ -255,15 +255,15 @@ export default function MemberAchievements() {
                     </div>
 
                     <div className="col-md-4">
-                      <label htmlFor="category" className="form-label fw-bold">
+                      <label htmlFor="itemCategory" className="form-label fw-bold">
                         <i className="fas fa-tags me-2 text-warning"></i>
                         التصنيف *
                       </label>
                       <select
                         className="form-select form-select-lg"
-                        id="category"
-                        name="category"
-                        value={formData.category}
+                        id="itemCategory"
+                        name="itemCategory"
+                        value={formData.itemCategory}
                         onChange={handleInputChange}
                         required
                         style={{borderRadius: '10px'}}
@@ -364,7 +364,7 @@ export default function MemberAchievements() {
                     <div className="card-header bg-light border-0" style={{borderRadius: '15px 15px 0 0'}}>
                       <div className="d-flex justify-content-between align-items-start">
                         <div>
-                          <span className="badge bg-success mb-2">{achievement.category}</span>
+                          <span className="badge bg-success mb-2">{achievement.itemCategory}</span>
                           <h6 className="mb-0 text-muted">
                             <i className="fas fa-calendar me-2"></i>
                             {new Date(achievement.date).toLocaleDateString('ar-EG')}
@@ -436,8 +436,7 @@ export default function MemberAchievements() {
                 <div className="card border-0 shadow-sm text-center" style={{borderRadius: '15px'}}>
                   <div className="card-body p-4">
                     <i className="fas fa-tags fa-3x text-info mb-3"></i>
-                    <h3 className="fw-bold text-info mb-2">
-                      {new Set(achievements.map(a => a.category)).size}
+                                     <h3 className="fw-bold text-info mb-2">{new Set(achievements.map(a => a.itemCategory)).size}</h3>}
                     </h3>
                     <p className="text-muted mb-0">تصنيفات مختلفة</p>
                   </div>
