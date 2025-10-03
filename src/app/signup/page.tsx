@@ -92,7 +92,7 @@ export default function SignupPage() {
 
     // Prepare user data
     const userData: any = {
-      full_name: fullName,
+      fullName: fullName,
       first_name: firstName,
       last_name: lastName,
       user_type: userType,

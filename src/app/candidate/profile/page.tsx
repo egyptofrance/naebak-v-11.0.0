@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 interface CandidateProfile {
   id: number;
-  full_name: string;
+    fullName: string;
   email: string;
   position: 'Parliament Candidate' | 'Senate Candidate';
   governorate: string;
@@ -28,7 +28,7 @@ export default function CandidateProfile() {
   const router = useRouter();
   const [profile, setProfile] = useState<CandidateProfile>({
     id: 0,
-    full_name: '',
+        fullName: '',
     email: '',
     position: 'Parliament Candidate',
     governorate: '',
@@ -97,7 +97,7 @@ export default function CandidateProfile() {
         
         const loadedProfile: CandidateProfile = {
           id: user.id || 1,
-          full_name: user.full_name || "مرشح تجريبي",
+                    fullName: user.fullName || "مرشح تجريبي",
           email: user.email || "candidate@example.com",
           position: candidateData.position || 'Parliament Candidate',
           governorate: candidateData.governorate || "",
@@ -134,7 +134,7 @@ export default function CandidateProfile() {
 
     try {
       // التحقق من صحة البيانات
-      if (!profile.full_name || !profile.governorate || !profile.electoral_district || 
+            if (!profile.fullName || !profile.governorate || !profile.electoral_district || 
           !profile.phone_number || !profile.electoral_symbol || !profile.electoral_number) {
         setMessage({type: 'error', text: 'يرجى ملء جميع الحقول المطلوبة'});
         setIsSaving(false);
@@ -169,7 +169,7 @@ export default function CandidateProfile() {
         const user = JSON.parse(userData);
         const updatedUser = {
           ...user,
-          full_name: profile.full_name,
+                    fullName: profile.fullName,
           profile_completed: true
         };
         localStorage.setItem('user', JSON.stringify(updatedUser));

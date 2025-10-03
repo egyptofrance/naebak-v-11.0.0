@@ -5,7 +5,7 @@ import CitizenProtectedRoute from '../../../components/CitizenProtectedRoute';;
 
 interface UserProfile {
   id: number;
-  full_name: string;
+    fullName: string;
   email: string;
   phone_number: string;
   user_type: string;
@@ -37,7 +37,7 @@ export default function CitizenDashboard() {
         // هنا سيتم استدعاء API الحقيقي
         const mockProfile: UserProfile = {
           id: 1,
-          full_name: "أحمد محمد علي",
+                    fullName: "أحمد محمد علي",
           email: "ahmed@example.com",
           phone_number: "01012345678",
           user_type: "citizen",
@@ -93,7 +93,7 @@ export default function CitizenDashboard() {
                 />
                 <div>
                   <h2 className="fw-bold mb-1" style={{color: '#004705'}}>
-                    مرحباً، {userProfile?.full_name}
+                    مرحباً، {userProfile?.fullName}
                   </h2>
                   <p className="text-muted mb-0">لوحة تحكم المواطن</p>
                 </div>
@@ -250,7 +250,7 @@ export default function CitizenDashboard() {
                   <h6 className="fw-bold mb-3" style={{color: '#004705'}}>معلومات الملف الشخصي</h6>
                   <div className="mb-3">
                     <small className="text-muted">الاسم الكامل</small>
-                    <p className="mb-1 fw-medium">{userProfile?.full_name}</p>
+                    <p className="mb-1 fw-medium">{userProfile?.fullName}</p>
                   </div>
                   <div className="mb-3">
                     <small className="text-muted">البريد الإلكتروني</small>

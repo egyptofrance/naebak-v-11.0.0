@@ -6,7 +6,7 @@ import CitizenProtectedRoute from '../../../components/CitizenProtectedRoute';
 
 interface CitizenProfile {
   id: number;
-  full_name: string;
+  fullName: string;
   email: string;
   phone_number: string;
   whatsapp_number?: string;
@@ -30,7 +30,7 @@ export default function CitizenProfile() {
   const router = useRouter();
   const [profile, setProfile] = useState<CitizenProfile>({
     id: 0,
-    full_name: '',
+        fullName: '',
     email: '',
     phone_number: '',
     whatsapp_number: '',
@@ -65,7 +65,7 @@ export default function CitizenProfile() {
         
         const loadedProfile: CitizenProfile = {
           id: user.id || 1,
-          full_name: user.full_name || "مستخدم تجريبي",
+          fullName: user.fullName || "مستخدم تجريبي",
           email: user.email || "demo@example.com",
           phone_number: citizenData.phone_number || user.phone_number || "",
           whatsapp_number: citizenData.whatsapp_number || "",
@@ -238,8 +238,8 @@ export default function CitizenProfile() {
                           <input 
                             type="text" 
                             className="form-control form-control-lg" 
-                            value={profile.full_name}
-                            onChange={(e) => handleInputChange('full_name', e.target.value)}
+                            value={profile.fullName}
+                          onChange={(e) => handleInputChange(\'fullName\', e.target.value)}
                             required
                           />
                         </div>

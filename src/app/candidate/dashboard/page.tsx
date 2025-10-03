@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
 interface CandidateProfile {
-  full_name: string;
+    fullName: string;
   position: 'Parliament Candidate' | 'Senate Candidate';
   governorate: string;
   electoral_district: string;
@@ -32,7 +32,7 @@ export default function CandidateDashboard() {
         const candidateData = candidateProfile ? JSON.parse(candidateProfile) : {};
         
         const loadedProfile: CandidateProfile = {
-          full_name: user.full_name || "مرشح تجريبي",
+                    fullName: user.fullName || "مرشح تجريبي",
           position: candidateData.position || 'Parliament Candidate',
           governorate: candidateData.governorate || "",
           electoral_district: candidateData.electoral_district || "",
@@ -95,7 +95,7 @@ export default function CandidateDashboard() {
                 />
                 <div>
                   <h2 className="fw-bold mb-1" style={{color: '#004705'}}>
-                    مرحباً، {profile.full_name}
+                    مرحباً، {profile.fullName}
                   </h2>
                   <p className="text-muted mb-0">
                     {profile.position === 'Parliament Candidate' ? 'مرشح مجلس النواب' : 'مرشح مجلس الشيوخ'}
