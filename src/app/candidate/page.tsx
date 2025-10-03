@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import MessageModal from '../../components/MessageModal'
 
-export default function CandidatePage() {{
+export default function CandidatePage() {
   const [activeTab, setActiveTab] = useState('personal')
   const [achievementsPage, setAchievementsPage] = useState(1)
   const [eventsPage, setEventsPage] = useState(1)
