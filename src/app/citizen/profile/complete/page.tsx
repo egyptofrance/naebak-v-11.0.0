@@ -5,8 +5,8 @@ import { useRouter } from 'next/navigation';
 import CitizenProtectedRoute from '../../../../components/CitizenProtectedRoute';
 
 interface CitizenProfileData {
-  phone_number: string;
-  whatsapp_number: string;
+  phoneNumber: string;
+  whatsappNumber: string;
   governorate: string;
   city: string;
   village: string;
@@ -26,8 +26,8 @@ export default function CompleteProfile() {
   const [selectedGovernorate, setSelectedGovernorate] = useState<Governorate | null>(null);
   
   const [profileData, setProfileData] = useState<CitizenProfileData>({
-    phone_number: '',
-    whatsapp_number: '',
+    phoneNumber: '',
+    whatsappNumber: '',
     governorate: '',
     city: '',
     village: ''
@@ -57,7 +57,7 @@ export default function CompleteProfile() {
         const user = JSON.parse(userData);
         setProfileData(prev => ({
           ...prev,
-          phone_number: user.phone_number || '',
+          phoneNumber: user.phoneNumber || '',
           governorate: user.governorate || ''
         }));
         
@@ -101,7 +101,7 @@ export default function CompleteProfile() {
 
     try {
       // التحقق من صحة البيانات
-      if (!profileData.phone_number || !profileData.governorate || !profileData.city) {
+      if (!profileData.phoneNumber || !profileData.governorate || !profileData.city) {
         setMessage('يرجى ملء جميع الحقول المطلوبة');
         setIsLoading(false);
         return;
@@ -109,15 +109,15 @@ export default function CompleteProfile() {
 
       // التحقق من صحة رقم الهاتف المصري
       const phoneRegex = /^(010|011|012|015)\d{8}$/;
-      if (!phoneRegex.test(profileData.phone_number)) {
+      if (!phoneRegex.test(profileData.phoneNumber)) {
         setMessage('يرجى إدخال رقم هاتف مصري صحيح');
         setIsLoading(false);
         return;
       }
 
       // التحقق من رقم الواتساب إذا تم إدخاله
-      if (profileData.whatsapp_number && !phoneRegex.test(profileData.whatsapp_number)) {
-        setMessage('يرجى إدخال رقم واتساب مصري صحيح');
+      if (profileData.whatsappNumber && !phoneRegex.test(profileData.whatsappNumber)) {
+        setMessage("يرجى إدخال رقم واتساب مصري صحيح");
         setIsLoading(false);
         return;
       }
@@ -183,16 +183,16 @@ export default function CompleteProfile() {
                     <div className="row g-4">
                       {/* رقم الهاتف */}
                       <div className="col-md-6">
-                        <label htmlFor="phone_number" className="form-label fw-bold">
+                        <label htmlFor="phoneNumber" className="form-label fw-bold">
                           <i className="fas fa-phone me-2 text-success"></i>
                           رقم الهاتف *
                         </label>
                         <input
                           type="tel"
                           className="form-control form-control-lg"
-                          id="phone_number"
-                          name="phone_number"
-                          value={profileData.phone_number}
+                          id="phoneNumber"
+                          name="phoneNumber"
+                          value={profileData.phoneNumber}
                           onChange={handleInputChange}
                           placeholder="01012345678"
                           required
@@ -203,7 +203,7 @@ export default function CompleteProfile() {
 
                       {/* رقم الواتساب */}
                       <div className="col-md-6">
-                        <label htmlFor="whatsapp_number" className="form-label fw-bold">
+                        <label htmlFor="whatsappNumber" className="form-label fw-bold">
                           <i className="fab fa-whatsapp me-2 text-success"></i>
                           رقم الواتساب
                         </label>

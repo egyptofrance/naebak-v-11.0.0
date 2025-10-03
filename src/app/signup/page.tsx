@@ -13,7 +13,7 @@ export default function SignupPage() {
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-  const [whatsapp, setWhatsapp] = useState('');
+  const [whatsappNumber, setWhatsappNumber] = useState("");
   const [gender, setGender] = useState('');
   const [birthDate, setBirthDate] = useState('');
   const [governorate, setGovernorate] = useState('');
@@ -97,7 +97,7 @@ export default function SignupPage() {
       last_name: lastName,
       user_type: userType,
       phoneNumber: phoneNumber,
-      whatsapp: whatsapp || phoneNumber,
+      whatsappNumber: whatsappNumber || phoneNumber,
       birth_date: birthDate,
       gender: gender,
       governorate: governorate,
@@ -307,15 +307,15 @@ export default function SignupPage() {
                     <div className="col-md-6">
                       <div className="form-floating mb-3">
                         <input 
-                          id="whatsapp" 
+                          id="whatsappNumber" 
                           type="tel" 
                           className="form-control" 
                           placeholder="رقم الواتساب" 
-                          value={whatsapp} 
-                          onChange={(e) => setWhatsapp(e.target.value)} 
+                          value={whatsappNumber} 
+                          onChange={(e) => setWhatsappNumber(e.target.value)} 
                           disabled={loading} 
                         />
-                        <label htmlFor="whatsapp"><i className="fab fa-whatsapp me-2"></i>رقم الواتساب (اختياري)</label>
+                        <label htmlFor="whatsappNumber"><i className="fab fa-whatsapp me-2"></i>رقم الواتساب (اختياري)</label>
                       </div>
                     </div>
                     <div className="col-md-6">

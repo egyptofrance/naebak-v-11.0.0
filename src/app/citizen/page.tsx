@@ -20,7 +20,7 @@ interface FormData {
   email: string;
   password: string;
   phone: string;
-  whatsapp: string;
+  whatsappNumber: string;
   governorate: string;
   city: string;
   center: string;
@@ -45,7 +45,7 @@ export default function CitizenPage() {
     email: '',
     password: '',
     phone: '',
-    whatsapp: '',
+    whatsappNumber: '',
     governorate: '',
     city: '',
     center: '',
@@ -122,8 +122,8 @@ export default function CitizenPage() {
     }
 
     // WhatsApp validation (if provided)
-    if (formData.whatsapp && !/^01[0-9]{9}$/.test(formData.whatsapp)) {
-      newErrors.whatsapp = 'رقم الواتساب يجب أن يبدأ بـ 01 ويكون 11 رقم';
+    if (formData.whatsappNumber && !/^01[0-9]{9}$/.test(formData.whatsappNumber)) {
+      newErrors.whatsappNumber = 'رقم الواتساب يجب أن يبدأ بـ 01 ويكون 11 رقم';
     }
 
     setErrors(newErrors);
@@ -384,16 +384,16 @@ export default function CitizenPage() {
                         <div className="col-md-6 mb-3">
                           <input 
                             type="tel" 
-                            name="whatsapp"
-                            value={formData.whatsapp}
+                            name="whatsappNumber"
+                            value={formData.whatsappNumber}
                             onChange={handleInputChange}
-                            className={`form-control form-control-lg ${errors.whatsapp ? 'is-invalid' : ''}`}
+                            className={`form-control form-control-lg ${errors.whatsappNumber ? 'is-invalid' : ''}`}
                             placeholder="رقم الواتساب (مثال: 01012345678)"
                             style={{fontSize: '0.9rem'}}
                             pattern="01[0-9]{9}"
                             maxLength={11}
                           />
-                          {errors.whatsapp && <div className="invalid-feedback">{errors.whatsapp}</div>}
+                          {errors.whatsappNumber && <div className="invalid-feedback">{errors.whatsappNumber}</div>}
                         </div>
                       </div>
                     </div>
