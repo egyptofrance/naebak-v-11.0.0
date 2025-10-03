@@ -27,7 +27,7 @@ export default function SignupPage() {
   // Candidate/Member specific fields
   const [council, setCouncil] = useState('');
   const [party, setParty] = useState('');
-  const [electoralDistrict, setElectoralDistrict] = useState('');
+    const [electoral_district, setElectoral_district] = useState('');
   const [electoralNumber, setElectoralNumber] = useState('');
   const [electoralSymbol, setElectoralSymbol] = useState('');
   const [bio, setBio] = useState('');
@@ -111,7 +111,7 @@ export default function SignupPage() {
     if (needsExtraFields) {
       userData.council = council;
       userData.party = party;
-      userData.electoral_district = electoralDistrict;
+            userData.electoral_district = electoral_district;
       userData.bio = bio;
       
       if (isCandidate) {
@@ -518,16 +518,16 @@ export default function SignupPage() {
 
                       <div className="form-floating mb-3">
                         <input 
-                          id="electoralDistrict" 
+                          id="electoral_district" 
                           type="text" 
                           className="form-control" 
                           placeholder="الدائرة الانتخابية" 
-                          value={electoralDistrict} 
-                          onChange={(e) => setElectoralDistrict(e.target.value)} 
+                          value={electoral_district} 
+                          onChange={(e) => setElectoral_district(e.target.value)} 
                           required 
                           disabled={loading} 
                         />
-                        <label htmlFor="electoralDistrict"><i className="fas fa-map-marked-alt me-2"></i>الدائرة الانتخابية *</label>
+                        <label htmlFor="electoral_district"><i className="fas fa-map-marked-alt me-2"></i>الدائرة الانتخابية *</label>
                       </div>
 
                       {isCandidate && (
