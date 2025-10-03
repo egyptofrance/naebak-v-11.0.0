@@ -228,7 +228,8 @@ export default function CandidateEvents() {
   }
 
   return (
-    {/* قسم الترحيب */}
+    <>
+      {/* قسم الترحيب */}
       <section className="py-4" style={{backgroundColor: '#f8f9fa'}}>
         <div className="container">
           <div className="row align-items-center">
@@ -610,5 +611,6 @@ export default function CandidateEvents() {
           </div>
         </section>
       )}
+    </>
   );
 }
