@@ -18,7 +18,7 @@ const CitizenProfilePage: React.FC<CitizenProfileProps> = async ({ params }) => 
     id: citizenId,
     fullName: `المواطن رقم ${citizenId}`,
     governorate: 'القاهرة',
-    bio: 'هذا هو وصف عام للمواطن. يمكن أن يحتوي على معلومات عامة أو إنجازات.',
+    userBio: 'هذا هو وصف عام للمواطن. يمكن أن يحتوي على معلومات عامة أو إنجازات.',
     // Add more public profile fields as needed
   };
 
@@ -37,7 +37,7 @@ const CitizenProfilePage: React.FC<CitizenProfileProps> = async ({ params }) => 
           </div>
           <div className="mb-4">
             <p className="text-gray-600">نبذة:</p>
-            <p className="text-base">{citizenData.bio}</p>
+            <p className="text-base">{citizenData.userBio}</p>
           </div>
           {/* Add more public profile details here */}
         </div>

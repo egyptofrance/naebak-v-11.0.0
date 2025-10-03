@@ -30,7 +30,7 @@ export default function SignupPage() {
     const [electoral_district, setElectoral_district] = useState('');
   const [electoralNumber, setElectoralNumber] = useState('');
   const [electoralSymbol, setElectoralSymbol] = useState('');
-  const [bio, setBio] = useState('');
+  const [userBio, setUserBio] = useState('');
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [bannerImage, setBannerImage] = useState<File | null>(null);
   
@@ -81,7 +81,7 @@ export default function SignupPage() {
       return;
     }
 
-    if (needsExtraFields && !bio) {
+    if (needsExtraFields && !userBio) {
       setError('السيرة الذاتية مطلوبة للمرشحين والنواب!');
       return;
     }
@@ -112,7 +112,7 @@ export default function SignupPage() {
       userData.council = council;
       userData.party = party;
             userData.electoral_district = electoral_district;
-      userData.bio = bio;
+      userData.userBio = userBio;
       
       if (isCandidate) {
         userData.electoral_number = electoralNumber;
@@ -567,16 +567,16 @@ export default function SignupPage() {
 
                       <div className="form-floating mb-3">
                         <textarea 
-                          id="bio" 
+                          id="userBio" 
                           className="form-control" 
                           placeholder="السيرة الذاتية" 
-                          value={bio} 
-                          onChange={(e) => setBio(e.target.value)} 
+                          value={userBio} 
+                          onChange={(e) => setUserBio(e.target.value)} 
                           required 
                           disabled={loading}
                           style={{minHeight: '150px'}}
                         />
-                        <label htmlFor="bio"><i className="fas fa-file-alt me-2"></i>السيرة الذاتية *</label>
+                        <label htmlFor="userBio"><i className="fas fa-file-alt me-2"></i>السيرة الذاتية *</label>
                       </div>
 
                       <div className="row">

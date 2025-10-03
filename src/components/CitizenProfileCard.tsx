@@ -6,7 +6,7 @@ interface CitizenData {
   email?: string;
   phoneNumber?: string;
   governorate: string;
-  bio?: string;
+  userBio?: string;
   profilePicture?: string;
   isActive?: boolean;
   joinDate?: string;
@@ -47,10 +47,10 @@ const CitizenProfileCard: React.FC<CitizenProfileCardProps> = ({ citizen, isPubl
         </div>
       </div>
       
-      {citizen.bio && (
+      {citizen.userBio && (
         <div className="mb-4">
           <h3 className="text-lg font-semibold text-gray-700 mb-2">نبذة</h3>
-          <p className="text-gray-600">{citizen.bio}</p>
+          <p className="text-gray-600">{citizen.userBio}</p>
         </div>
       )}
       
